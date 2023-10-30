@@ -39,6 +39,30 @@ app.post("/insert",(req,res) => {
     })
 })
 
+app.delete('/delete/:id',(req,res)=>{
+    const id = req.params.id
+    const deletequery = "delete from user where id=?"
+    db.query(deletequery,id,(error,result)=>{
+        console.log(result)
+        res.send(result)
+    })
+})
+
+app.put('/update/:id',(req,res)=>{
+    const id = req.params.id
+    // const newUserData = req.body
+    const name = req.body.name
+    const email = req.body.email
+    const password = req.body.password
+
+    // const updatequery = 'update user set ? where id=?'
+    const updatequery = 'update user set name=?, email=?, password=? where id=?'
+    db.query(updatequery,[name,email,password,id],(error,result)=>{
+        console.log(result)
+        res.send(result)
+    })
+})
+
 app.listen(2001,()=>{
     console.log("server started 2001")
 })
